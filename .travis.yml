@@ -1,26 +1,52 @@
 sudo: false
 language: scala
 
-scala:
-  - 2.12.8
-  - 2.11.12
-
 jdk:
   - openjdk11
 
 before_install:
+  - git fetch --tags
   - export PATH=${PATH}:./vendor/bundle
 
-install:
-  - rvm use 2.6.0 --install --fuzzy
-  - gem update --system
-  - gem install sass
-  - gem install jekyll -v 3.2.1
+stages:
+  - name: test
+  - name: release
+    if: ((branch = master AND type = push) OR (tag IS present)) AND NOT fork
 
-script:
-  - sbt ++$TRAVIS_SCALA_VERSION test
-  - sbt ++$TRAVIS_SCALA_VERSION mimaReportBinaryIssues
-  - sbt ++$TRAVIS_SCALA_VERSION docs/makeMicrosite
+
+jobs:
+  include:
+    # stage="test" if no stage is specified
+    -
+      name: test 2.12
+      scala: 2.12.8
+      script: sbt ++$TRAVIS_SCALA_VERSION test
+    - name: test 2.11
+      scala: 2.11.12
+      script: sbt ++$TRAVIS_SCALA_VERSION test
+    -
+      name: mima
+      script: sbt +mimaReportBinaryIssues
+    -
+      name: docs
+      install:
+        - rvm use 2.6.0 --install --fuzzy
+        - gem update --system
+        - gem install sass
+        - gem install jekyll -v 3.2.1
+      script: sbt +docs/makeMicrosite
+    # run ci-release only if previous stages passed
+    - stage: release
+      name: release
+      script: sbt ci-release
+    - stage: release
+      name: microsite
+      install:
+        - rvm use 2.6.0 --install --fuzzy
+        - gem update --system
+        - gem install sass
+        - gem install jekyll -v 3.2.1
+      script: sbt ++2.12.8 docs/publishMicrosite
 
 after_success:
   - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && test $TRAVIS_REPO_SLUG == "ChristopherDavenport/cats-effect-time" && sbt ++$TRAVIS_SCALA_VERSION publish
