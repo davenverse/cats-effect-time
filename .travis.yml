@@ -48,10 +48,6 @@ jobs:
         - gem install jekyll -v 3.2.1
       script: sbt ++2.12.8 docs/publishMicrosite
 
-after_success:
-  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && test $TRAVIS_REPO_SLUG == "ChristopherDavenport/cats-effect-time" && sbt ++$TRAVIS_SCALA_VERSION publish
-  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && test $TRAVIS_REPO_SLUG == "ChristopherDavenport/cats-effect-time" && test $TRAVIS_SCALA_VERSION == "2.12.8" && sbt docs/publishMicrosite
-
 cache:
   directories:
     - $HOME/.ivy2/cache
