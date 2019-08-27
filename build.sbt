@@ -77,7 +77,6 @@ lazy val releaseSettings = {
         )
     ).toSeq,
     publishArtifact in Test := false,
-    releasePublishArtifactsAction := PgpKeys.publishSigned.value,
     scmInfo := Some(
       ScmInfo(
         url("https://github.com/ChristopherDavenport/cats-effect-time"),
@@ -105,7 +104,6 @@ lazy val releaseSettings = {
 }
 
 lazy val mimaSettings = {
-  import sbtrelease.Version
 
   def semverBinCompatVersions(major: Int, minor: Int, patch: Int): Set[(Int, Int, Int)] = {
     val majorVersions: List[Int] =
