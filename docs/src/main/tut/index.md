@@ -15,3 +15,26 @@ libraryDependencies ++= Seq(
   "io.chrisdavenport" %% "cats-effect-time" % "<version>"
 )
 ```
+
+
+## Example
+
+
+```tut
+import cats.effect._
+import scala.concurrent.ExecutionContext.global
+import io.chrisdavenport.cats.effect.time.JavaTime
+
+implicit val T: Timer[IO] = IO.timer(global)
+
+// Works with a valid Functor and Clock in scope
+val currentTimeOp = JavaTime[IO].getInstant
+
+currentTimeOp.unsafeRunSync
+
+// Or you can use it implicitly
+import io.chrisdavenport.cats.effect.time.implicits._
+
+val currentTime = Clock[IO].getZonedDateTimeUTC
+currentTime.unsafeRunSync
+```
