@@ -20,9 +20,6 @@ scala_version_213: &scala_version_213 "2.13.0"
 jobs:
   include:
     # stage="test" if no stage is specified
-    - name: test 2.13
-      scala: 2.13.0
-      script: sbt ++$TRAVIS_SCALA_VERSION test
     -
       name: test 2.13
       scala: *scala_version_213
