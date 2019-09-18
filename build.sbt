@@ -6,7 +6,7 @@ lazy val `cats-effect-time` = project.in(file("."))
   .aggregate(core)
 
 lazy val core = project.in(file("core"))
-  .settings(commonSettings, releaseSettings, mimaSettings)
+  .settings(commonSettings, releaseSettings)
   .settings(
     name := "cats-effect-time"
   )
