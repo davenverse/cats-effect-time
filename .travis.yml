@@ -14,39 +14,44 @@ stages:
     if: ((branch = master AND type = push) OR (tag IS present)) AND NOT fork
 
 
+scala_version_212: &scala_version_212 "2.12.10"
+scala_version_213: &scala_version_213 "2.13.0"
+
 jobs:
   include:
     # stage="test" if no stage is specified
     -
-      name: test 2.12
-      scala: 2.12.8
+      name: test 2.13
+      scala: *scala_version_213
       script: sbt ++$TRAVIS_SCALA_VERSION test
-    - name: test 2.11
-      scala: 2.11.12
+    - name: test 2.12
+      scala: *scala_version_212
       script: sbt ++$TRAVIS_SCALA_VERSION test
     -
       name: mima
       script: sbt +mimaReportBinaryIssues
     -
       name: docs
+      scala: *scala_version_212
       install:
         - rvm use 2.6.0 --install --fuzzy
         - gem update --system
         - gem install sass
         - gem install jekyll -v 3.2.1
-      script: sbt +docs/makeMicrosite
+      script: sbt ++$TRAVIS_SCALA_VERSION docs/makeMicrosite
     # run ci-release only if previous stages passed
     - stage: release
       name: release
       script: sbt ci-release
     - stage: release
       name: microsite
+      scala: *scala_version_212
       install:
         - rvm use 2.6.0 --install --fuzzy
         - gem update --system
         - gem install sass
         - gem install jekyll -v 3.2.1
-      script: sbt ++2.12.8 docs/publishMicrosite
+      script: sbt ++$TRAVIS_SCALA_VERSION docs/publishMicrosite
 
 cache:
   directories:
