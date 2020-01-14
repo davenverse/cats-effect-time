@@ -100,6 +100,8 @@ object JavaTime {
   implicit def fromClock[F[_]](implicit C: Clock[F], F: Functor[F]): JavaTime[F] =
     new ClockJavaTime[F](C)(F)
 
+  // Starting on January 1, 10000, this will throw an exception.
+  // The author intends to leave this problem for future generations.
   private class ClockJavaTime[F[_]: Functor](private val c: Clock[F]) extends JavaTime[F]{
     def getInstant: F[Instant] = 
       c.realTime(MILLISECONDS).map(Instant.ofEpochMilli(_))
