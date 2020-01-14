@@ -21,6 +21,9 @@ import java.time._
  * time for replicatable time for tests
  * 
  **/
+@scala.annotation.implicitNotFound("""Cannot find implicit value for JavaTime[${F}].
+Building this implicit value depends on having an implicit
+Clock[${F}] and Functor[${F}] or some equivalent type.""")
 trait JavaTime[F[_]]{
   /**
    * Get the current Instant with millisecond precision
