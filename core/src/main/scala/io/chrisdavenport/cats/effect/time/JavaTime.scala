@@ -84,6 +84,8 @@ trait JavaTime[F[_]]{
    * Get the current ZonedDateTime in UTC Zone
    **/
   def getZonedDateTimeUTC: F[ZonedDateTime]
+
+  def mapK[G[_]](fk: F ~> G): JavaTime[G] = new JavaTime.JavaTimeMapKImpl[F, G](this, fk)
 }
 
 /**
@@ -134,5 +136,21 @@ object JavaTime {
       getInstant.map(ZonedDateTime.ofInstant(_, zone))
     def getZonedDateTimeUTC: F[ZonedDateTime] =
       getZonedDateTime(ZoneOffset.UTC)
+  }
+
+  private class JavaTimeMapKImpl[F[_], G[_]](base: JavaTime[F], fk: F ~> G) extends JavaTime[G]{
+    def getInstant: G[java.time.Instant] = fk(base.getInstant)
+    def getLocalDate(zone: java.time.ZoneId): G[java.time.LocalDate] = fk(base.getLocalDate(zone))
+    def getLocalDateTime(zone: java.time.ZoneId): G[java.time.LocalDateTime] = fk(base.getLocalDateTime(zone))
+    def getLocalDateTimeUTC: G[java.time.LocalDateTime] = fk(base.getLocalDateTimeUTC)
+    def getLocalDateUTC: G[java.time.LocalDate] = fk(base.getLocalDateUTC)
+    def getLocalTime(zone: java.time.ZoneId): G[java.time.LocalTime] = fk(base.getLocalTime(zone))
+    def getLocalTimeUTC: G[java.time.LocalTime] = fk(base.getLocalTimeUTC)
+    def getYear(zone: java.time.ZoneId): G[java.time.Year] = fk(base.getYear(zone))
+    def getYearMonth(zone: java.time.ZoneId): G[java.time.YearMonth] = fk(base.getYearMonth(zone))
+    def getYearMonthUTC: G[java.time.YearMonth] = fk(base.getYearMonthUTC)
+    def getYearUTC: G[java.time.Year] = fk(base.getYearUTC)
+    def getZonedDateTime(zone: java.time.ZoneId): G[java.time.ZonedDateTime] = fk(base.getZonedDateTime(zone))
+    def getZonedDateTimeUTC: G[java.time.ZonedDateTime] = fk(base.getZonedDateTimeUTC)
   }
 }
