@@ -25,7 +25,7 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
       "org.typelevel"               %%% "cats-effect-laws"           % catsEffectV   % Test,  
     )
     mimaVersionCheckExcludedVersions := {
-      if (isDotty.value) Set()
+      if (!isDotty.value) Set()
       else Set(
         "0.1.0",
         "0.1.1",
