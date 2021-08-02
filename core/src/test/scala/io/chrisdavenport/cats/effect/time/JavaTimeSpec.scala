@@ -4,7 +4,7 @@ import munit.CatsEffectSuite
 import cats._
 import cats.effect._
 
-import cats.effect.laws.util.TestContext
+// import cats.effect.laws.util.TestContext
 import java.time._
 
 class JavaTimeSpec extends CatsEffectSuite {
@@ -22,32 +22,25 @@ class JavaTimeSpec extends CatsEffectSuite {
   // def getZonedDateTime(zone: ZoneId): F[ZonedDateTime]
   // def getZonedDateTimeUTC: F[ZonedDateTime]
 
-  test("getInstant the epoch in a test context") {
-    implicit val ec: TestContext = TestContext()
-    implicit val T: Timer[IO] = ec.timer[IO]
-    val test = JavaTime.fromClock(T.clock, Functor[IO]).getInstant
-    test.map(it =>  assertEquals(it, Instant.EPOCH))
+  test("getInstant") {//in ticked { implicit ticker => 
+
+    val test = JavaTime[IO].getInstant
+    test.map(it =>  
+      val x = Instant.now.toEpochMilli - it.toEpochMilli
+      assert(x < 1000)
+    )
   }
 
-  test("getLocalDate the epoch in a test context") {
-    implicit val ec: TestContext = TestContext()
-    implicit val T: Timer[IO] = ec.timer[IO]
-    val test = JavaTime.fromClock(T.clock, Functor[IO]).getLocalDate(ZoneOffset.UTC)
-    test.map(it => assertEquals(it, LocalDate.ofEpochDay(0)))
+  test("getLocalDate") {
+    val test = JavaTime[IO].getLocalDate(ZoneOffset.UTC)
+    val today = LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC).toLocalDate
+    test.map(it => assertEquals(it, today))
   }
 
-  test("getLocalDateUTC the epoch in a test context") {
-    implicit val ec: TestContext = TestContext()
-    implicit val T: Timer[IO] = ec.timer[IO]
-    val test = JavaTime.fromClock(T.clock, Functor[IO]).getLocalDateUTC
-    test.map(it => assertEquals(it, LocalDate.ofEpochDay(0)))
-  }
-
-  test("get the epoch year from test context"){
-    implicit val ec: TestContext = TestContext()
-    implicit val T: Timer[IO] = ec.timer[IO]
-    val test = JavaTime.fromClock(T.clock, Functor[IO]).getYearUTC
-    test.map(it => assertEquals(it, Year.of(1970)))
+  test("get the epoch year"){
+    val test = JavaTime[IO].getYearUTC
+    val year = Year.of(LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC).toLocalDate.getYear())
+    test.map(it => assertEquals(it, year))
   }
 
 }

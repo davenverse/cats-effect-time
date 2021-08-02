@@ -17,7 +17,7 @@ import java.time._
  **/
 object implicits {
   implicit class ClockOps[F[_]: Functor](private val c: Clock[F]){
-    private val J = JavaTime.fromClock(c, Functor[F])
+    private val J = JavaTime.fromClock(c)
 
     /**
      * Get the current Instant with millisecond precision
