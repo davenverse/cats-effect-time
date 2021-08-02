@@ -20,7 +20,7 @@ libraryDependencies ++= Seq(
 ## Example
 
 
-```tut
+```scala mdoc
 import cats.effect._
 import scala.concurrent.ExecutionContext.global
 import io.chrisdavenport.cats.effect.time.JavaTime

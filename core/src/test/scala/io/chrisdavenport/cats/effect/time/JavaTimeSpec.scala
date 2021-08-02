@@ -1,12 +1,13 @@
 package io.chrisdavenport.cats.effect.time
 
-import org.specs2._
+import munit.CatsEffectSuite
+import cats._
 import cats.effect._
 
 import cats.effect.laws.util.TestContext
 import java.time._
 
-object JavaTimeSpec extends mutable.Specification {
+class JavaTimeSpec extends CatsEffectSuite {
 
   // Additional Tests to Implement: 
   // def getLocalDateTime(zone: ZoneId): F[LocalDateTime]
@@ -21,34 +22,32 @@ object JavaTimeSpec extends mutable.Specification {
   // def getZonedDateTime(zone: ZoneId): F[ZonedDateTime]
   // def getZonedDateTimeUTC: F[ZonedDateTime]
 
-  "JavaTime" should {
-    "getInstant the epoch in a test context" in {
-      implicit val ec = TestContext()
-      implicit val T = ec.timer[IO]
-      val test = JavaTime[IO].getInstant
-      test.unsafeRunSync() must_=== Instant.EPOCH
-    }
+  test("getInstant the epoch in a test context") {
+    implicit val ec: TestContext = TestContext()
+    implicit val T: Timer[IO] = ec.timer[IO]
+    val test = JavaTime.fromClock(T.clock, Functor[IO]).getInstant
+    test.map(it =>  assertEquals(it, Instant.EPOCH))
+  }
 
-    "getLocalDate the epoch in a test context" in {
-      implicit val ec = TestContext()
-      implicit val T = ec.timer[IO]
-      val test = JavaTime[IO].getLocalDate(ZoneOffset.UTC)
-      test.unsafeRunSync() must_=== LocalDate.ofEpochDay(0)
-    }
+  test("getLocalDate the epoch in a test context") {
+    implicit val ec: TestContext = TestContext()
+    implicit val T: Timer[IO] = ec.timer[IO]
+    val test = JavaTime.fromClock(T.clock, Functor[IO]).getLocalDate(ZoneOffset.UTC)
+    test.map(it => assertEquals(it, LocalDate.ofEpochDay(0)))
+  }
 
-    "getLocalDateUTC the epoch in a test context" in {
-      implicit val ec = TestContext()
-      implicit val T = ec.timer[IO]
-      val test = JavaTime[IO].getLocalDateUTC
-      test.unsafeRunSync() must_=== LocalDate.ofEpochDay(0)
-    }
+  test("getLocalDateUTC the epoch in a test context") {
+    implicit val ec: TestContext = TestContext()
+    implicit val T: Timer[IO] = ec.timer[IO]
+    val test = JavaTime.fromClock(T.clock, Functor[IO]).getLocalDateUTC
+    test.map(it => assertEquals(it, LocalDate.ofEpochDay(0)))
+  }
 
-    "get the epoch year from test context" in {
-      implicit val ec = TestContext()
-      implicit val T = ec.timer[IO]
-      val test = JavaTime[IO].getYearUTC
-      test.unsafeRunSync() must_=== Year.of(1970)
-    }
+  test("get the epoch year from test context"){
+    implicit val ec: TestContext = TestContext()
+    implicit val T: Timer[IO] = ec.timer[IO]
+    val test = JavaTime.fromClock(T.clock, Functor[IO]).getYearUTC
+    test.map(it => assertEquals(it, Year.of(1970)))
   }
 
 }
