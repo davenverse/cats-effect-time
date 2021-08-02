@@ -17,13 +17,13 @@
 <span class="k">import</span> <span class="nn">io.chrisdavenport.cats.effect.time.JavaTime</span>
 
 <span class="k">implicit</span> <span class="k">val</span> <span class="nv">T</span><span class="k">:</span> <span class="kt">Timer</span><span class="o">[</span><span class="kt">IO</span><span class="o">]</span> <span class="k">=</span> <span class="nv">IO</span><span class="o">.</span><span class="py">timer</span><span class="o">(</span><span class="n">global</span><span class="o">)</span>
-<span class="c1">// T: Timer[[A &gt;: Nothing &lt;: Any] =&gt; IO[A]] = cats.effect.internals.IOTimer@469ae7bd</span>
+<span class="c1">// T: Timer[[A &gt;: Nothing &lt;: Any] =&gt; IO[A]] = cats.effect.internals.IOTimer@38ffda0c</span>
 
 <span class="c1">// Works with a valid Functor and Clock in scope</span>
 <span class="k">val</span> <span class="nv">currentTimeOp</span> <span class="k">=</span> <span class="nc">JavaTime</span><span class="o">[</span><span class="kt">IO</span><span class="o">].</span><span class="py">getInstant</span>
 <span class="c1">// currentTimeOp: IO[Instant] = Map(</span>
-<span class="c1">//   Delay(cats.effect.IO$$$Lambda$14486/1234973162@514ecadd),</span>
-<span class="c1">//   io.chrisdavenport.cats.effect.time.JavaTime$ClockJavaTime$$Lambda$14487/2035704770@5dd19737,</span>
+<span class="c1">//   Delay(cats.effect.IO$$$Lambda$14732/462001567@31a902df),</span>
+<span class="c1">//   io.chrisdavenport.cats.effect.time.JavaTime$ClockJavaTime$$Lambda$14733/147476640@30938935,</span>
 <span class="c1">//   StackTrace(</span>
 <span class="c1">//     List(</span>
 <span class="c1">//       cats.effect.internals.IOTracing$.buildFrame(IOTracing.scala:48),</span>
@@ -55,7 +55,7 @@
 <span class="c1">// )</span>
 
 <span class="nv">currentTimeOp</span><span class="o">.</span><span class="py">unsafeRunSync</span><span class="o">()</span>
-<span class="c1">// res0: Instant = 2021-08-02T22:40:05.418Z</span>
+<span class="c1">// res0: Instant = 2021-08-02T22:55:02.277Z</span>
 
 <span class="c1">// Or you can use it implicitly</span>
 <span class="k">import</span> <span class="nn">io.chrisdavenport.cats.effect.time.implicits._</span>
@@ -63,8 +63,8 @@
 <span class="k">val</span> <span class="nv">currentTime</span> <span class="k">=</span> <span class="nc">Clock</span><span class="o">[</span><span class="kt">IO</span><span class="o">].</span><span class="py">getZonedDateTimeUTC</span>
 <span class="c1">// currentTime: IO[ZonedDateTime] = Map(</span>
 <span class="c1">//   Map(</span>
-<span class="c1">//     Delay(cats.effect.IO$$$Lambda$14486/1234973162@137e8ad7),</span>
-<span class="c1">//     io.chrisdavenport.cats.effect.time.JavaTime$ClockJavaTime$$Lambda$14487/2035704770@2e945703,</span>
+<span class="c1">//     Delay(cats.effect.IO$$$Lambda$14732/462001567@70411500),</span>
+<span class="c1">//     io.chrisdavenport.cats.effect.time.JavaTime$ClockJavaTime$$Lambda$14733/147476640@5bc0f8e4,</span>
 <span class="c1">//     StackTrace(</span>
 <span class="c1">//       List(</span>
 <span class="c1">//         cats.effect.internals.IOTracing$.buildFrame(IOTracing.scala:48),</span>
@@ -94,7 +94,7 @@
 <span class="c1">//       )</span>
 <span class="c1">//     )</span>
 <span class="c1">//   ),</span>
-<span class="c1">//   io.chrisdavenport.cats.effect.time.JavaTime$ClockJavaTime$$Lambda$14488/2013652991@62c93849,</span>
+<span class="c1">//   io.chrisdavenport.cats.effect.time.JavaTime$ClockJavaTime$$Lambda$14734/2042930852@141df472,</span>
 <span class="c1">//   StackTrace(</span>
 <span class="c1">//     List(</span>
 <span class="c1">//       cats.effect.internals.IOTracing$.buildFrame(IOTracing.scala:48),</span>
@@ -103,7 +103,7 @@
 <span class="c1">//       cats.effect.IO.map(IO.scala:106),</span>
 <span class="c1">// ...</span>
 <span class="nv">currentTime</span><span class="o">.</span><span class="py">unsafeRunSync</span><span class="o">()</span>
-<span class="c1">// res1: ZonedDateTime = 2021-08-02T22:40:05.421Z</span>
+<span class="c1">// res1: ZonedDateTime = 2021-08-02T22:55:02.280Z</span>
 </code></pre></div></div>
 </div></div></section></main><footer id="site-footer"><div class="container"><div class="row"><p>cats-effect-time is designed and developed by <a href="https://github.com/davenverse/cats-effect-time" target="_blank" rel="noopener noreferrer">davenverse</a></p></div></div></footer><script src="/cats-effect-time/highlight/highlight.pack.js"></script><script src="/cats-effect-time/lunr/lunr.js"></script><script>
 // For all code blocks, copy the language from the containing div
