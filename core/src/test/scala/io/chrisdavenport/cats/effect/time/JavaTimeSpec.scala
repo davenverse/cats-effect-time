@@ -1,10 +1,7 @@
 package io.chrisdavenport.cats.effect.time
 
 import munit.CatsEffectSuite
-import cats._
 import cats.effect._
-
-// import cats.effect.laws.util.TestContext
 import java.time._
 
 class JavaTimeSpec extends CatsEffectSuite {
@@ -25,22 +22,27 @@ class JavaTimeSpec extends CatsEffectSuite {
   test("getInstant") {//in ticked { implicit ticker => 
 
     val test = JavaTime[IO].getInstant
-    test.map(it =>  
+    test.map{it =>  
       val x = Instant.now.toEpochMilli - it.toEpochMilli
       assert(x < 1000)
-    )
+    }
   }
 
   test("getLocalDate") {
     val test = JavaTime[IO].getLocalDate(ZoneOffset.UTC)
-    val today = LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC).toLocalDate
-    test.map(it => assertEquals(it, today))
+    
+    test.map{it => 
+      val today = LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC).toLocalDate
+      assertEquals(it, today)
+    }
   }
 
   test("get the epoch year"){
     val test = JavaTime[IO].getYearUTC
-    val year = Year.of(LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC).toLocalDate.getYear())
-    test.map(it => assertEquals(it, year))
+    test.map{it => 
+      val year = Year.of(LocalDateTime.ofInstant(Instant.now(), ZoneOffset.UTC).toLocalDate.getYear())
+      assertEquals(it, year)
+    }
   }
 
 }
