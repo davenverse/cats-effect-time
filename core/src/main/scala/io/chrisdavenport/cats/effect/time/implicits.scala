@@ -17,7 +17,6 @@ import java.time._
  **/
 object implicits {
   implicit class ClockOps[F[_]: Functor](private val c: Clock[F]){
-    // private implicit val c: Clock[F] = c
     private val J = JavaTime.fromClock(c, Functor[F])
 
     /**
