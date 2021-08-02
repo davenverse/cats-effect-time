@@ -24,6 +24,15 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
       "org.typelevel" %%% "munit-cats-effect-2" % "1.0.5" % Test,
       "org.typelevel"               %%% "cats-effect-laws"           % catsEffectV   % Test,  
     )
+    mimaVersionCheckExcludedVersions := {
+      if (isDotty.value) Set()
+      else Set(
+        "0.1.0",
+        "0.1.1",
+        "0.1.2"
+      )
+    }
+
   ).jsSettings(
     libraryDependencies ++= Seq(
       "io.github.cquiroz" %%% "scala-java-time" % "2.3.0",
