@@ -1,10 +1,7 @@
 package io.chrisdavenport.cats.effect.time
 
 import cats._
-import cats.syntax.all._
 import cats.effect.Clock
-import cats.effect.syntax.all._
-import scala.concurrent.duration._
 import java.time._
 
 /**

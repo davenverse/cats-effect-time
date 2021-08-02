@@ -9,11 +9,6 @@ import java.time._
  * JavaTime as methods can be made to appear automatically on Clock rather than
  * needing an explicitly new algebra. 
  * 
- * Drawbacks are if you are lacking a Functor constraint it will be difficult to
- * see why these enhancements are not in place. Using it without
- * Functor basically means you can't move anywhere with this data, so this 
- * seems a likely constraint to be in place. Additionally, all Clock implementations
- * of which I know have a Functor of that type as well.
  **/
 object implicits {
   implicit class ClockOps[F[_]: Functor](private val c: Clock[F]){
