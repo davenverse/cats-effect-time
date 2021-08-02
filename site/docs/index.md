@@ -30,11 +30,11 @@ implicit val T: Timer[IO] = IO.timer(global)
 // Works with a valid Functor and Clock in scope
 val currentTimeOp = JavaTime[IO].getInstant
 
-currentTimeOp.unsafeRunSync
+currentTimeOp.unsafeRunSync()
 
 // Or you can use it implicitly
 import io.chrisdavenport.cats.effect.time.implicits._
 
 val currentTime = Clock[IO].getZonedDateTimeUTC
-currentTime.unsafeRunSync
+currentTime.unsafeRunSync()
 ```
