@@ -1,9 +1,7 @@
 package io.chrisdavenport.cats.effect.time
 
 import cats._
-import cats.implicits._
 import cats.effect.Clock
-import scala.concurrent.duration._
 import java.time._
 
 /**
@@ -23,7 +21,7 @@ import java.time._
  **/
 @scala.annotation.implicitNotFound("""Cannot find implicit value for JavaTime[${F}].
 Building this implicit value depends on having an implicit
-Clock[${F}] and Functor[${F}] or some equivalent type.""")
+Clock[${F}] or some equivalent type.""")
 trait JavaTime[F[_]]{
   /**
    * Get the current Instant with millisecond precision
@@ -99,41 +97,41 @@ object JavaTime {
   
   def apply[F[_]](implicit ev: JavaTime[F]): JavaTime[F] = ev
 
-  implicit def fromClock[F[_]](implicit C: Clock[F], F: Functor[F]): JavaTime[F] =
-    new ClockJavaTime[F](C)(F)
+  implicit def fromClock[F[_]](implicit C: Clock[F]): JavaTime[F] =
+    new ClockJavaTime[F]()(C)
 
   // Starting on January 1, 10000, this will throw an exception.
   // The author intends to leave this problem for future generations.
-  private class ClockJavaTime[F[_]: Functor](private val c: Clock[F]) extends JavaTime[F]{
+  private class ClockJavaTime[F[_]](implicit val c: Clock[F]) extends JavaTime[F]{
     def getInstant: F[Instant] = 
-      c.realTime(MILLISECONDS).map(Instant.ofEpochMilli(_))
+      c.applicative.map(c.realTime)(d => Instant.ofEpochMilli(d.toMillis))
     
     def getLocalDate(zone: ZoneId): F[LocalDate] =  
-      getLocalDateTime(zone).map(_.toLocalDate)
+      c.applicative.map(getLocalDateTime(zone))(_.toLocalDate)
     def getLocalDateUTC: F[LocalDate] = 
       getLocalDate(ZoneOffset.UTC)
 
     def getLocalDateTime(zone: ZoneId): F[LocalDateTime] = 
-      getInstant.map(LocalDateTime.ofInstant(_, zone))
+      c.applicative.map(getInstant)(LocalDateTime.ofInstant(_, zone))
     def getLocalDateTimeUTC: F[LocalDateTime] =
       getLocalDateTime(ZoneOffset.UTC)
 
     def getLocalTime(zone: ZoneId) = 
-      getLocalDateTime(zone).map(_.toLocalTime)
+      c.applicative.map(getLocalDateTime(zone))(_.toLocalTime)
     def getLocalTimeUTC: F[LocalTime] =
       getLocalTime(ZoneOffset.UTC)
     
     def getYear(zone: ZoneId): F[Year] = 
-      getLocalDate(zone).map(d => Year.of(d.getYear()))
+      c.applicative.map(getLocalDate(zone))(d => Year.of(d.getYear()))
     def getYearUTC: F[Year] = getYear(ZoneOffset.UTC)
 
     def getYearMonth(zone: ZoneId): F[YearMonth] = 
-      getLocalDate(zone).map(d => YearMonth.of(d.getYear, d.getMonth))
+      c.applicative.map(getLocalDate(zone))(d => YearMonth.of(d.getYear, d.getMonth))
     def getYearMonthUTC: F[YearMonth] =
       getYearMonth(ZoneOffset.UTC)
     
     def getZonedDateTime(zone: ZoneId): F[ZonedDateTime] = 
-      getInstant.map(ZonedDateTime.ofInstant(_, zone))
+      c.applicative.map(getInstant)(ZonedDateTime.ofInstant(_, zone))
     def getZonedDateTimeUTC: F[ZonedDateTime] =
       getZonedDateTime(ZoneOffset.UTC)
   }
