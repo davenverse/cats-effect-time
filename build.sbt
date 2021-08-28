@@ -4,7 +4,7 @@ import sbtcrossproject.CrossPlugin.autoImport.{crossProject, CrossType}
 ThisBuild / crossScalaVersions := Seq("2.12.14", "2.13.6", "3.0.0")
 
 val catsV = "2.6.1"
-val catsEffectV = "3.2.1"
+val catsEffectV = "3.2.5"
 
 lazy val `cats-effect-time` = project.in(file("."))
   .disablePlugins(MimaPlugin)
