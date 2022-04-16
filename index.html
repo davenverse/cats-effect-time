@@ -23,12 +23,12 @@
 <span class="k">val</span> <span class="nv">currentTimeOp</span> <span class="k">=</span> <span class="nc">JavaTime</span><span class="o">[</span><span class="kt">IO</span><span class="o">].</span><span class="py">getInstant</span>
 <span class="c1">// currentTimeOp: IO[Instant] = Map(</span>
 <span class="c1">//   IO(...),</span>
-<span class="c1">//   io.chrisdavenport.cats.effect.time.JavaTime$ClockJavaTime$$Lambda$13924/1982607632@23cf08fe,</span>
+<span class="c1">//   io.chrisdavenport.cats.effect.time.JavaTime$ClockJavaTime$$Lambda$14312/324610572@1fce1c5,</span>
 <span class="c1">//   cats.effect.tracing.TracingEvent$StackTrace</span>
 <span class="c1">// )</span>
 
 <span class="nv">currentTimeOp</span><span class="o">.</span><span class="py">unsafeRunSync</span><span class="o">()</span>
-<span class="c1">// res0: Instant = 2021-08-03T14:49:25.100Z</span>
+<span class="c1">// res0: Instant = 2022-04-16T03:04:48.288Z</span>
 
 <span class="c1">// Or you can use it implicitly</span>
 <span class="k">import</span> <span class="nn">io.chrisdavenport.cats.effect.time.implicits._</span>
@@ -37,14 +37,14 @@
 <span class="c1">// currentTime: IO[ZonedDateTime] = Map(</span>
 <span class="c1">//   Map(</span>
 <span class="c1">//     IO(...),</span>
-<span class="c1">//     io.chrisdavenport.cats.effect.time.JavaTime$ClockJavaTime$$Lambda$13924/1982607632@7f394902,</span>
+<span class="c1">//     io.chrisdavenport.cats.effect.time.JavaTime$ClockJavaTime$$Lambda$14312/324610572@77a8b81e,</span>
 <span class="c1">//     cats.effect.tracing.TracingEvent$StackTrace</span>
 <span class="c1">//   ),</span>
-<span class="c1">//   io.chrisdavenport.cats.effect.time.JavaTime$ClockJavaTime$$Lambda$13955/917862362@6966fea5,</span>
+<span class="c1">//   io.chrisdavenport.cats.effect.time.JavaTime$ClockJavaTime$$Lambda$14343/906110843@10d8d067,</span>
 <span class="c1">//   cats.effect.tracing.TracingEvent$StackTrace</span>
 <span class="c1">// )</span>
 <span class="nv">currentTime</span><span class="o">.</span><span class="py">unsafeRunSync</span><span class="o">()</span>
-<span class="c1">// res1: ZonedDateTime = 2021-08-03T14:49:25.105Z</span>
+<span class="c1">// res1: ZonedDateTime = 2022-04-16T03:04:48.296Z</span>
 </code></pre></div></div>
 </div></div></section></main><footer id="site-footer"><div class="container"><div class="row"><p>cats-effect-time is designed and developed by <a href="https://github.com/davenverse/cats-effect-time" target="_blank" rel="noopener noreferrer">davenverse</a></p></div></div></footer><script src="/cats-effect-time/highlight/highlight.pack.js"></script><script src="/cats-effect-time/lunr/lunr.js"></script><script>
 // For all code blocks, copy the language from the containing div
