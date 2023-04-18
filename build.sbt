@@ -35,7 +35,7 @@ lazy val core = crossProject(JSPlatform, JVMPlatform, NativePlatform)
       "org.typelevel"               %%% "cats-core"                  % catsV,
       "org.typelevel"               %%% "cats-effect"                % catsEffectV,
       "org.typelevel"               %%% "munit-cats-effect"          % munitCatsEffectV % Test,
-      "org.typelevel"               %%% "cats-effect-laws"           % catsEffectV   % Test,  
+      "org.typelevel"               %%% "cats-effect-laws"           % catsEffectV   % Test,
     ),
   ).jsSettings(
     scalaJSLinkerConfig ~= (_.withModuleKind(ModuleKind.CommonJSModule))
@@ -48,4 +48,4 @@ lazy val core = crossProject(JSPlatform, JVMPlatform, NativePlatform)
 lazy val site = project.in(file("site"))
   .enablePlugins(TypelevelSitePlugin)
   .dependsOn(core.jvm)
-
+  
