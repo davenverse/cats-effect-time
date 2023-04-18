@@ -109,12 +109,12 @@
 </span><span class="keyword">val</span><span> </span><span class="identifier">currentTimeOp</span><span> = </span><span class="type-name">JavaTime</span><span>[</span><span class="type-name">IO</span><span>].</span><span class="identifier">getInstant</span><span>
 </span><span class="comment">// currentTimeOp: IO[Instant] = Map(
 //   ioe = IO(...),
-//   f = io.chrisdavenport.cats.effect.time.JavaTime$ClockJavaTime$$Lambda$10541/1971926463@29a40fa2,
+//   f = io.chrisdavenport.cats.effect.time.JavaTime$ClockJavaTime$$Lambda$11271/876808519@385730c9,
 //   event = cats.effect.tracing.TracingEvent$StackTrace
 // )
 </span><span>
 </span><span class="identifier">currentTimeOp</span><span>.</span><span class="identifier">unsafeRunSync</span><span>()
-</span><span class="comment">// res0: Instant = 2023-04-18T14:57:12.343Z
+</span><span class="comment">// res0: Instant = 2023-04-18T16:22:37.999Z
 </span><span>
 </span><span class="comment">// Or you can use it implicitly
 </span><span class="keyword">import</span><span> </span><span class="identifier">io</span><span>.</span><span class="identifier">chrisdavenport</span><span>.</span><span class="identifier">cats</span><span>.</span><span class="identifier">effect</span><span>.</span><span class="identifier">time</span><span>.</span><span class="identifier">implicits</span><span>.</span><span class="identifier">_</span><span>
@@ -123,14 +123,14 @@
 </span><span class="comment">// currentTime: IO[ZonedDateTime] = Map(
 //   ioe = Map(
 //     ioe = IO(...),
-//     f = io.chrisdavenport.cats.effect.time.JavaTime$ClockJavaTime$$Lambda$10541/1971926463@42453454,
+//     f = io.chrisdavenport.cats.effect.time.JavaTime$ClockJavaTime$$Lambda$11271/876808519@3a9b5971,
 //     event = cats.effect.tracing.TracingEvent$StackTrace
 //   ),
-//   f = io.chrisdavenport.cats.effect.time.JavaTime$ClockJavaTime$$Lambda$10593/522467399@3ff55d90,
+//   f = io.chrisdavenport.cats.effect.time.JavaTime$ClockJavaTime$$Lambda$11323/1473927088@46f4e4f,
 //   event = cats.effect.tracing.TracingEvent$StackTrace
 // )
 </span><span class="identifier">currentTime</span><span>.</span><span class="identifier">unsafeRunSync</span><span>()
-</span><span class="comment">// res1: ZonedDateTime = 2023-04-18T14:57:12.348Z</span></code></pre>
+</span><span class="comment">// res1: ZonedDateTime = 2023-04-18T16:22:38.004Z</span></code></pre>
 
         <hr style="margin-top: 30px"/>
         <footer style="font-size: 90%; text-align: center">
