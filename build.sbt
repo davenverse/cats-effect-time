@@ -43,9 +43,10 @@ lazy val core = crossProject(JSPlatform, JVMPlatform, NativePlatform)
     libraryDependencies ++= Seq(
       "io.github.cquiroz" %%% "scala-java-time" % "2.5.0",
     ),
+  ).nativeSettings(
+    tlVersionIntroduced := List("2.12", "2.13", "3").map(_ -> "0.2.1").toMap
   )
 
 lazy val site = project.in(file("site"))
   .enablePlugins(TypelevelSitePlugin)
   .dependsOn(core.jvm)
-  
