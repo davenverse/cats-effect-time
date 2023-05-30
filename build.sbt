@@ -19,8 +19,8 @@ val catsEffectV = "3.4.9"
 
 val munitCatsEffectV = "2.0.0-M3"
 
-ThisBuild / crossScalaVersions := Seq("2.12.15","2.13.8", "3.2.2")
-ThisBuild / scalaVersion := "3.2.2"
+ThisBuild / crossScalaVersions := Seq("2.12.15","2.13.8", "3.3.0")
+ThisBuild / scalaVersion := "3.3.0"
 ThisBuild / versionScheme := Some("early-semver")
 
 lazy val `cats-effect-time` = tlCrossRootProject
