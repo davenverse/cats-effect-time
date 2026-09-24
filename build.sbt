@@ -1,4 +1,4 @@
-ThisBuild / tlBaseVersion := "0.2" // your current series x.y
+ThisBuild / tlBaseVersion := "0.3" // your current series x.y
 
 ThisBuild / organization := "io.chrisdavenport"
 ThisBuild / organizationName := "Christopher Davenport"
@@ -10,17 +10,13 @@ ThisBuild / developers := List(
 
 ThisBuild / tlCiReleaseBranches := Seq("main")
 
-// true by default, set to false to publish to s01.oss.sonatype.org
-ThisBuild / tlSonatypeUseLegacyHost := true
-
-
 val catsV = "2.9.0"
 val catsEffectV = "3.4.9"
 
 val munitCatsEffectV = "2.0.0-M3"
 
-ThisBuild / crossScalaVersions := Seq("2.12.15","2.13.8", "3.2.2")
-ThisBuild / scalaVersion := "3.2.2"
+ThisBuild / crossScalaVersions := Seq("2.12.15","2.13.18", "3.3.8")
+ThisBuild / scalaVersion := "3.3.8"
 ThisBuild / versionScheme := Some("early-semver")
 
 lazy val `cats-effect-time` = tlCrossRootProject
@@ -49,4 +45,11 @@ lazy val core = crossProject(JSPlatform, JVMPlatform, NativePlatform)
 
 lazy val site = project.in(file("site"))
   .enablePlugins(TypelevelSitePlugin)
+  .settings(
+    laikaTheme := tlSiteHelium.value.site
+      .topNavigationBar(
+        homeLink = laika.helium.config.IconLink.internal(laika.ast.Path.Root / "index.md", laika.helium.config.HeliumIcon.home)
+      )
+      .build
+  )
   .dependsOn(core.jvm)
