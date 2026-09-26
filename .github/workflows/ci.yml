@@ -28,7 +28,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-22.04]
-        scala: [2.12, 2.13, 3]
+        scala: [2.13, 3]
         java: [temurin@8]
         project: [cats-effect-timeJS, cats-effect-timeJVM, cats-effect-timeNative]
     runs-on: ${{ matrix.os }}
@@ -122,36 +122,6 @@ jobs:
       - name: sbt update
         if: matrix.java == 'temurin@8' && steps.setup-java-temurin-8.outputs.cache-hit == 'false'
         run: sbt +update
-
-      - name: Download target directories (2.12, cats-effect-timeJS)
-        uses: actions/download-artifact@v6
-        with:
-          name: target-${{ matrix.os }}-${{ matrix.java }}-2.12-cats-effect-timeJS
-
-      - name: Inflate target directories (2.12, cats-effect-timeJS)
-        run: |
-          tar xf targets.tar
-          rm targets.tar
-
-      - name: Download target directories (2.12, cats-effect-timeJVM)
-        uses: actions/download-artifact@v6
-        with:
-          name: target-${{ matrix.os }}-${{ matrix.java }}-2.12-cats-effect-timeJVM
-
-      - name: Inflate target directories (2.12, cats-effect-timeJVM)
-        run: |
-          tar xf targets.tar
-          rm targets.tar
-
-      - name: Download target directories (2.12, cats-effect-timeNative)
-        uses: actions/download-artifact@v6
-        with:
-          name: target-${{ matrix.os }}-${{ matrix.java }}-2.12-cats-effect-timeNative
-
-      - name: Inflate target directories (2.12, cats-effect-timeNative)
-        run: |
-          tar xf targets.tar
-          rm targets.tar
 
       - name: Download target directories (2.13, cats-effect-timeJS)
         uses: actions/download-artifact@v6
@@ -270,7 +240,7 @@ jobs:
       - name: Submit Dependencies
         uses: scalacenter/sbt-dependency-submission@v2
         with:
-          modules-ignore: cats-effect-timejs_2.12 cats-effect-timejs_2.13 cats-effect-timejs_3 site_2.12 site_2.13 site_3 cats-effect-timejvm_2.12 cats-effect-timejvm_2.13 cats-effect-timejvm_3 cats-effect-timenative_2.12 cats-effect-timenative_2.13 cats-effect-timenative_3
+          modules-ignore: cats-effect-timejs_2.13 cats-effect-timejs_3 site_2.13 site_3 cats-effect-timejvm_2.13 cats-effect-timejvm_3 cats-effect-timenative_2.13 cats-effect-timenative_3
           configs-ignore: test scala-tool scala-doc-tool test-internal
 
   site:

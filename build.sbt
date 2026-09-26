@@ -1,4 +1,4 @@
-ThisBuild / tlBaseVersion := "0.3" // your current series x.y
+ThisBuild / tlBaseVersion := "0.4" // your current series x.y
 
 ThisBuild / organization := "io.chrisdavenport"
 ThisBuild / organizationName := "Christopher Davenport"
@@ -10,12 +10,12 @@ ThisBuild / developers := List(
 
 ThisBuild / tlCiReleaseBranches := Seq()
 
-val catsV = "2.9.0"
-val catsEffectV = "3.4.9"
+val catsV = "2.13.0"
+val catsEffectV = "3.7.1"
 
-val munitCatsEffectV = "2.0.0-M3"
+val munitCatsEffectV = "2.2.1"
 
-ThisBuild / crossScalaVersions := Seq("2.12.15","2.13.18", "3.3.8")
+ThisBuild / crossScalaVersions := Seq("2.13.18", "3.3.8")
 ThisBuild / scalaVersion := "3.3.8"
 ThisBuild / versionScheme := Some("early-semver")
 
@@ -37,7 +37,7 @@ lazy val core = crossProject(JSPlatform, JVMPlatform, NativePlatform)
     scalaJSLinkerConfig ~= (_.withModuleKind(ModuleKind.CommonJSModule))
   ).platformsSettings(JSPlatform, NativePlatform)(
     libraryDependencies ++= Seq(
-      "io.github.cquiroz" %%% "scala-java-time" % "2.5.0",
+      "io.github.cquiroz" %%% "scala-java-time" % "2.7.0",
     ),
   ).nativeSettings(
     tlVersionIntroduced := List("2.12", "2.13", "3").map(_ -> "0.2.1").toMap
